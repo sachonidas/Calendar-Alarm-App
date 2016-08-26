@@ -1,7 +1,9 @@
 package sachonidas.calendalarm;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     AlarmManager alarmManager;
     TimePicker timePicker;
     Context context;
+    PendingIntent pendingIntent;
 
     private TextView tv1;
 
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         final Calendar calendar =  Calendar.getInstance();
 
         Button btnAlarma = (Button)findViewById(R.id.btnAlarma);
+
+        final Intent intent = new Intent(this.context, AlarmReceiver.class);
 
         btnAlarma.setOnClickListener(new View.OnClickListener(){
 
@@ -53,7 +58,13 @@ public class MainActivity extends AppCompatActivity {
                     minuteString = "0" + String.valueOf(minute);
                 }
 
-                set_alarm_text("Alarma encendida!!");
+                set_alarm_text("Alarma encendida a las "+ hourString + " : " +minuteString);
+
+                intent.putExtra("extra","yes");
+
+                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
         });
 
@@ -62,7 +73,14 @@ public class MainActivity extends AppCompatActivity {
         btnQuitarAlarama.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 set_alarm_text("Alarma apagada!!!");
+
+                alarmManager.cancel(pendingIntent);
+
+                intent.putExtra("extra","no");
+
+                sendBroadcast(intent);
             }
         });
     }
