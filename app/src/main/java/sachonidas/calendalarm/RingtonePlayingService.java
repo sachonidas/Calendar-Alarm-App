@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -52,7 +53,7 @@ public class RingtonePlayingService extends Service {
 
             Log.e("there is no music","and you want to start");
 
-            mediaPlayer = MediaPlayer.create(this, R.raw.Mind_Feat_Kai);
+            mediaPlayer = MediaPlayer.create(this, R.raw.mind);
             mediaPlayer.start();
 
             this.isRunning = true;
