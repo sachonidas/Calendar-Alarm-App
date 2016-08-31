@@ -65,14 +65,14 @@ public class RingtonePlayingService extends Service {
 
             PendingIntent pendingIntentMainActivity = PendingIntent.getActivity(this, 0, intentMainAcitivity, 0);
 
-            Notification notificacionPopUp = new Notification.Builder(this)
+           /*Notification notificacionPopUp = new Notification.Builder(this)
                     .setContentTitle("An alarm is going of")
                     .setContentText("Click me!")
                     .setContentIntent(pendingIntentMainActivity)
                     .setAutoCancel(true)
                     .build();
 
-            notificationManager.notify(0, notificacionPopUp);
+            notificationManager.notify(0, notificacionPopUp);*/
 
 
         }else if (this.isRunning && startId == 0){
